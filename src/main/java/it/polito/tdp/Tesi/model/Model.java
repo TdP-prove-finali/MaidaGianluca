@@ -1,6 +1,7 @@
 package it.polito.tdp.Tesi.model;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class Model {
 	public int calcola_guadagno(List<Boat> l) {
 		int tot=0;
 		for(Boat b:l){
-			tot+=b.guadagno;
+			//tot+=b.guadagno;
 		}
 		return tot;
 	}

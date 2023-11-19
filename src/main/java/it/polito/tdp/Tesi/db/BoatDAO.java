@@ -1,4 +1,4 @@
-package it.polito.tdp.Tesi.model.db;
+package it.polito.tdp.Tesi.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
