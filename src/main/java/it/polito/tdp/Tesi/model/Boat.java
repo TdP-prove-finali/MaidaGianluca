@@ -12,6 +12,7 @@ public class Boat implements Comparable<Boat> {
 	Double lunghezza;
 	Double larghezza;
 	String Luogo;
+	Integer guadagno;
 	
 	public Boat(Integer id, Integer prezzo, String tipologia, String manifattura, String condizione, Integer anno,
 			Double lunghezza, Double larghezza, String luogo) {
@@ -25,6 +26,7 @@ public class Boat implements Comparable<Boat> {
 		this.lunghezza = lunghezza;
 		this.larghezza = larghezza;
 		Luogo = luogo;
+		this.setGuadagno();
 	}
 
 	public Integer getId() {
@@ -90,79 +92,36 @@ public class Boat implements Comparable<Boat> {
 	public void setLuogo(String luogo) {
 		Luogo = luogo;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((Luogo == null) ? 0 : Luogo.hashCode());
-		result = prime * result + ((anno == null) ? 0 : anno.hashCode());
-		result = prime * result + ((condizione == null) ? 0 : condizione.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((larghezza == null) ? 0 : larghezza.hashCode());
-		result = prime * result + ((lunghezza == null) ? 0 : lunghezza.hashCode());
-		result = prime * result + ((manifattura == null) ? 0 : manifattura.hashCode());
-		result = prime * result + ((prezzo == null) ? 0 : prezzo.hashCode());
-		result = prime * result + ((tipologia == null) ? 0 : tipologia.hashCode());
-		return result;
+	
+	public Double getLunghezza() {
+		return lunghezza;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Boat other = (Boat) obj;
-		if (Luogo == null) {
-			if (other.Luogo != null)
-				return false;
-		} else if (!Luogo.equals(other.Luogo))
-			return false;
-		if (anno == null) {
-			if (other.anno != null)
-				return false;
-		} else if (!anno.equals(other.anno))
-			return false;
-		if (condizione == null) {
-			if (other.condizione != null)
-				return false;
-		} else if (!condizione.equals(other.condizione))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (larghezza == null) {
-			if (other.larghezza != null)
-				return false;
-		} else if (!larghezza.equals(other.larghezza))
-			return false;
-		if (lunghezza == null) {
-			if (other.lunghezza != null)
-				return false;
-		} else if (!lunghezza.equals(other.lunghezza))
-			return false;
-		if (manifattura == null) {
-			if (other.manifattura != null)
-				return false;
-		} else if (!manifattura.equals(other.manifattura))
-			return false;
-		if (prezzo == null) {
-			if (other.prezzo != null)
-				return false;
-		} else if (!prezzo.equals(other.prezzo))
-			return false;
-		if (tipologia == null) {
-			if (other.tipologia != null)
-				return false;
-		} else if (!tipologia.equals(other.tipologia))
-			return false;
-		return true;
+	public void setLunghezza(Double lunghezza) {
+		this.lunghezza = lunghezza;
 	}
+
+	public Integer getGuadagno() {
+		return guadagno;
+	}
+
+	public void setGuadagno() {
+		int tot=0;
+		if(this.lunghezza<=10) {
+			this.guadagno=100;
+		}else {
+			this.guadagno=500;
+		}
+//		if(this.){
+//			
+//		}else {
+//			
+//		}
+//		this.guadagno = tot + 10 +this.prezzo;   // sistemare
+	}
+
+
+
 
 	@Override
 	public String toString() {

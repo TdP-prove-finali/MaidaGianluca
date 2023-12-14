@@ -9,45 +9,37 @@ import java.util.List;
 
 public class Model {
 	
-	private List<Boat> best=new ArrayList<>();
-	private List<Boat> best2=new ArrayList<>();
-	private List<Boat> parziale=new ArrayList<>();
+	public List<Boat> best=new ArrayList<>();
+	public int prezzoB=0;
+	public List<Boat> best2=new ArrayList<>();
+	public int prezzoB2=0;
+	public List<Boat> parziale=new ArrayList<>();
+	public int prezzoP=0;	
+
 
 	
-
-	public void barche(List<Boat> listaBarche, int budget, int lunghezza) {
-		barche_ricorsiva(parziale, budget, listaBarche, lunghezza );
-		System.out.println("La soluzione è:");
-		if(this.calcola_guadagno(best)>this.calcola_guadagno(best2)) {
-			for(Boat b:best){
-				System.out.println(b);
-			}
-		}else {
-			for(Boat b:best){
-				System.out.println(b);
-			}
-			System.out.println("In alternativa:");
-			for(Boat b:best2){
-				System.out.println(b);
-			}
+	public List<Boat> barche(List<Boat> listaBarche, int budget /*, int lunghezza*/) {
+		barche_ricorsiva(parziale, budget, listaBarche /*, lunghezza*/ );
+		if(this.calcola_guadagno(best)>=this.calcola_guadagno(best2)) {
+			best2=new ArrayList<>();
 		}
-	
+			return best;
 //		calprezzo(parziale)==budget
 	}
 	
 	
-	private void barche_ricorsiva(List<Boat> parziale, int budget, List<Boat> listaBarche, int lunghezza) {
+	private void barche_ricorsiva(List<Boat> parziale, int budget, List<Boat> listaBarche /*int lunghezza*/) {
 		if(parziale.size()>0 ) {  //caso terminale
-			int disponibile=budget-this.calcola_prezzo(parziale);
-			int disponibile2=budget+(budget/100)-this.calcola_prezzo(parziale);
-			int lunghezza_disponibile=lunghezza-this.calcola_lunghezza(parziale);
-			if(calcola_guadagno(parziale)>calcola_guadagno(best)) { 
+			int disponibile=budget-this.prezzoP;
+			int disponibile2=budget+(budget/100)-this.prezzoP;
+			//int lunghezza_disponibile=lunghezza-this.calcola_lunghezza(parziale);
+			if(this.calcola_guadagno(parziale)>this.calcola_guadagno(best)) { 
 				if(disponibile>=0) {
-					if((disponibilita(disponibile,listaBarche) && lunghezza_disponibile(lunghezza_disponibile,listaBarche) || disponibile==0 )){
+					if((disponibilita(disponibile,listaBarche) /*&& lunghezza_disponibile(lunghezza_disponibile,listaBarche)*/ || disponibile==0 )){
 						this.best=new ArrayList<>(parziale);
 						return;
 					}
-				}else if((disponibilita2(disponibile2,listaBarche) && lunghezza_disponibile(lunghezza_disponibile,listaBarche) || disponibile2==0 )){
+				}else if((disponibilita2(disponibile2,listaBarche) /*&& lunghezza_disponibile(lunghezza_disponibile,listaBarche)*/ || disponibile2==0 )){
 						if(disponibilita2(disponibile2,listaBarche)) {
 							this.best2=new ArrayList<>(parziale);
 							return;
@@ -57,14 +49,18 @@ public class Model {
 		}
 		
 		for(Boat b:listaBarche) {
-			if(budget>=(calcola_prezzo(parziale)+b.prezzo) && !parziale.contains(b) && lunghezza>=(calcola_lunghezza(parziale)+b.lunghezza)) {
+			if(budget>=(this.prezzoP+b.prezzo) && !parziale.contains(b) /*&& lunghezza>=(calcola_lunghezza(parziale)+b.lunghezza)*/) {
 				parziale.add(b);
-				this.barche_ricorsiva(parziale, budget, listaBarche,lunghezza);
+				this.prezzoP+=b.prezzo;
+				this.barche_ricorsiva(parziale, budget, listaBarche /*,lunghezza*/);
 				parziale.remove(b);
-			}else if((budget+(budget/100))>=(calcola_prezzo(parziale)+b.prezzo) && !parziale.contains(b) && lunghezza>=(calcola_lunghezza(parziale)+b.lunghezza)) {
+				this.prezzoP-=b.prezzo;
+			}else if((budget+(budget/100))>=(this.prezzoP+b.prezzo) && !parziale.contains(b) /*&& lunghezza>=(calcola_lunghezza(parziale)+b.lunghezza)*/) {
 				parziale.add(b);
-				this.barche_ricorsiva(parziale, budget, listaBarche,  lunghezza);
+				this.prezzoP+=b.prezzo;
+				this.barche_ricorsiva(parziale, budget, listaBarche/*,  lunghezza*/);
 				parziale.remove(b);
+				this.prezzoP-=b.prezzo;
 			}
 		}
 		
@@ -81,18 +77,18 @@ public class Model {
 	public int calcola_guadagno(List<Boat> l) {
 		int tot=0;
 		for(Boat b:l){
-			//tot+=b.guadagno;
+			tot+=b.guadagno;
 		}
 		return tot;
 	}
-	public int calcola_lunghezza(List<Boat> l) {
-		int tot=0;
-		for(Boat b:l){
-			tot+=b.lunghezza;
-		}
-		return tot;
-	}
-	
+//	public int calcola_lunghezza(List<Boat> l) {
+//		int tot=0;
+//		for(Boat b:l){
+//			tot+=b.lunghezza;
+//		}
+//		return tot;
+//	}
+//	
 	
 	
 	public boolean disponibilita(int disponibili,List<Boat> listaBarche) {
@@ -115,16 +111,22 @@ public class Model {
 		}
 		return true;
 	}
-	public boolean lunghezza_disponibile(int l ,List<Boat> listaBarche) {
-		ArrayList<Boat> lb=new ArrayList<>(listaBarche);
-		Collections.sort(lb);
-		for(Boat b:listaBarche){
-			if(b.lunghezza<=l && !parziale.contains(b)){	
-				return false;
-			}
-		}
-		return true;
+
+
+	public List<Boat> secondasol() {
+		return best2;
 	}
+	
+//	public boolean lunghezza_disponibile(int l ,List<Boat> listaBarche) {
+//		ArrayList<Boat> lb=new ArrayList<>(listaBarche);
+//		Collections.sort(lb);
+//		for(Boat b:listaBarche){
+//			if(b.lunghezza<=l && !parziale.contains(b)){	
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	
 	
