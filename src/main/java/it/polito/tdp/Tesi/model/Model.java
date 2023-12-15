@@ -9,16 +9,24 @@ import java.util.List;
 
 public class Model {
 	
-	public List<Boat> best=new ArrayList<>();
-	public int prezzoB=0;
-	public List<Boat> best2=new ArrayList<>();
-	public int prezzoB2=0;
-	public List<Boat> parziale=new ArrayList<>();
-	public int prezzoP=0;	
+	public List<Boat> best;
+	public int prezzoB;
+	public List<Boat> best2;
+	public int prezzoB2;
+	public List<Boat> parziale;
+	public int prezzoP;	
 
 
 	
 	public List<Boat> barche(List<Boat> listaBarche, int budget /*, int lunghezza*/) {
+	// inizializzo liste
+		best=new ArrayList<>();
+		prezzoB=0;
+		best2=new ArrayList<>();
+		prezzoB2=0;
+		parziale=new ArrayList<>();
+		prezzoP=0;	
+		
 		barche_ricorsiva(parziale, budget, listaBarche /*, lunghezza*/ );
 		if(this.calcola_guadagno(best)>=this.calcola_guadagno(best2)) {
 			best2=new ArrayList<>();
