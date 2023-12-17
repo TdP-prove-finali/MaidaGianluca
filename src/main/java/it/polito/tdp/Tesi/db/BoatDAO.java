@@ -37,25 +37,40 @@ public class BoatDAO {
 		}
 	}
 	
-	public List<Boat> listBoatSelected(String condizione, double Lmin, double Lmax, String tipologia, int Amin, int Amax){
+	public List<Boat> listBoatSelected(int prezzo, List<String> condi, double Lmin, double Lmax, String tipologia, int Amin, int Amax){
 		String sql = "SELECT * "
 				+ "FROM boat b "
-				+ "WHERE b.Condizione=? "
-				+ "AND b.Lunghezza>=? AND b.Lunghezza<=? "
-				+ "AND b.Tipologia=? "
-				+ "AND b.Anno>=? AND b.Anno<=?";
+				+ "WHERE b.Lunghezza>=? AND b.Lunghezza<=? "
+				+ "AND b.Prezzo<=? "
+				+ "AND b.Anno>=? AND b.Anno<=? ";
+		if(condi.size()>1) {
+			sql= sql+"AND (b.Condizione=? OR b.Condizione=?)";
+		}else {
+			sql= sql+"AND b.Condizione=?";
+		}
+		if(!tipologia.equals("Qualsiasi")) {
+			sql= sql+" AND b.Tipologia=?";
+		}
 		List<Boat> result = new ArrayList<Boat>();
 		Connection conn = DBConnect.getConnection();
 
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
-			
-			st.setString(1,condizione);
-			st.setDouble(2, Lmin);
-			st.setDouble(3, Lmax);
-			st.setString(4, tipologia);
-			st.setInt(5, Amin);
-			st.setInt(6, Amax);
+
+			st.setDouble(1, Lmin);
+			st.setDouble(2, Lmax);
+			st.setInt(3, prezzo);
+			st.setInt(4, Amin);
+			st.setInt(5, Amax);
+			int j=6;
+			for(int i=0;i<condi.size();i++) {
+				st.setString(j,condi.get(i));
+				j++;
+			}
+			if(!tipologia.equals("Qualsiasi")) {
+				st.setString(j,tipologia);
+			}
+
 			
 			ResultSet res = st.executeQuery();
 			while (res.next()) {

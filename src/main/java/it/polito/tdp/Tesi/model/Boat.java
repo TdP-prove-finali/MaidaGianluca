@@ -135,6 +135,85 @@ public class Boat implements Comparable<Boat> {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Luogo == null) ? 0 : Luogo.hashCode());
+		result = prime * result + ((anno == null) ? 0 : anno.hashCode());
+		result = prime * result + ((condizione == null) ? 0 : condizione.hashCode());
+		result = prime * result + ((guadagno == null) ? 0 : guadagno.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((larghezza == null) ? 0 : larghezza.hashCode());
+		result = prime * result + ((lunghezza == null) ? 0 : lunghezza.hashCode());
+		result = prime * result + ((manifattura == null) ? 0 : manifattura.hashCode());
+		result = prime * result + ((prezzo == null) ? 0 : prezzo.hashCode());
+		result = prime * result + ((tipologia == null) ? 0 : tipologia.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Boat other = (Boat) obj;
+		if (Luogo == null) {
+			if (other.Luogo != null)
+				return false;
+		} else if (!Luogo.equals(other.Luogo))
+			return false;
+		if (anno == null) {
+			if (other.anno != null)
+				return false;
+		} else if (!anno.equals(other.anno))
+			return false;
+		if (condizione == null) {
+			if (other.condizione != null)
+				return false;
+		} else if (!condizione.equals(other.condizione))
+			return false;
+		if (guadagno == null) {
+			if (other.guadagno != null)
+				return false;
+		} else if (!guadagno.equals(other.guadagno))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (larghezza == null) {
+			if (other.larghezza != null)
+				return false;
+		} else if (!larghezza.equals(other.larghezza))
+			return false;
+		if (lunghezza == null) {
+			if (other.lunghezza != null)
+				return false;
+		} else if (!lunghezza.equals(other.lunghezza))
+			return false;
+		if (manifattura == null) {
+			if (other.manifattura != null)
+				return false;
+		} else if (!manifattura.equals(other.manifattura))
+			return false;
+		if (prezzo == null) {
+			if (other.prezzo != null)
+				return false;
+		} else if (!prezzo.equals(other.prezzo))
+			return false;
+		if (tipologia == null) {
+			if (other.tipologia != null)
+				return false;
+		} else if (!tipologia.equals(other.tipologia))
+			return false;
+		return true;
+	}
 	
 	
 	

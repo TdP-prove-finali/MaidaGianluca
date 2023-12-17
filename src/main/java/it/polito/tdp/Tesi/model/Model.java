@@ -19,7 +19,6 @@ public class Model {
 
 	
 	public List<Boat> barche(List<Boat> listaBarche, int budget /*, int lunghezza*/) {
-	// inizializzo liste
 		best=new ArrayList<>();
 		prezzoB=0;
 		best2=new ArrayList<>();

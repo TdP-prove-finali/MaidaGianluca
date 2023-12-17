@@ -148,12 +148,12 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="643.0">
                <children>
-                  <Button fx:id="Lista" mnemonicParsing="false" onAction="#ActionLista" prefHeight="26.0" prefWidth="121.0" text="LISTA">
+                  <Button fx:id="Lista" mnemonicParsing="false" onAction="#ActionLista" prefHeight="26.0" prefWidth="133.0" text="LISTA">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="Soluzione" mnemonicParsing="false" onAction="#ActionSoluzione" prefHeight="26.0" prefWidth="139.0" text="GENERA SOLUZIONE">
+                  <Button fx:id="Soluzione" mnemonicParsing="false" onAction="#ActionSoluzione" prefHeight="26.0" prefWidth="168.0" text="GENERA SOLUZIONE">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
