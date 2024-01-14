@@ -38,7 +38,7 @@ public class Model {
 	private void barche_ricorsiva(List<Boat> parziale, int budget, List<Boat> listaBarche /*int lunghezza*/) {
 		if(parziale.size()>0 ) {  //caso terminale
 			int disponibile=budget-this.prezzoP;
-			int disponibile2=budget+(budget/100)-this.prezzoP;
+			int disponibile2=budget+(budget/2)-this.prezzoP;
 			//int lunghezza_disponibile=lunghezza-this.calcola_lunghezza(parziale);
 			if(this.calcola_guadagno(parziale)>this.calcola_guadagno(best)) { 
 				if(disponibile>=0) {
@@ -47,10 +47,10 @@ public class Model {
 						return;
 					}
 				}else if((disponibilita2(disponibile2,listaBarche) /*&& lunghezza_disponibile(lunghezza_disponibile,listaBarche)*/ || disponibile2==0 )){
-						if(disponibilita2(disponibile2,listaBarche)) {
-							this.best2=new ArrayList<>(parziale);
-							return;
-						}
+					if(disponibilita2(disponibile2,listaBarche)) {
+						this.best2=new ArrayList<>(parziale);
+						return;
+					}
 				}
 			}
 		}
@@ -62,7 +62,7 @@ public class Model {
 				this.barche_ricorsiva(parziale, budget, listaBarche /*,lunghezza*/);
 				parziale.remove(b);
 				this.prezzoP-=b.prezzo;
-			}else if((budget+(budget/100))>=(this.prezzoP+b.prezzo) && !parziale.contains(b) /*&& lunghezza>=(calcola_lunghezza(parziale)+b.lunghezza)*/) {
+			}else if((budget+(budget/2))>=(this.prezzoP+b.prezzo) && !parziale.contains(b) /*&& lunghezza>=(calcola_lunghezza(parziale)+b.lunghezza)*/) {
 				parziale.add(b);
 				this.prezzoP+=b.prezzo;
 				this.barche_ricorsiva(parziale, budget, listaBarche/*,  lunghezza*/);
@@ -88,15 +88,6 @@ public class Model {
 		}
 		return tot;
 	}
-//	public int calcola_lunghezza(List<Boat> l) {
-//		int tot=0;
-//		for(Boat b:l){
-//			tot+=b.lunghezza;
-//		}
-//		return tot;
-//	}
-//	
-	
 	
 	public boolean disponibilita(int disponibili,List<Boat> listaBarche) {
 		ArrayList<Boat> lb=new ArrayList<>(listaBarche);
@@ -123,19 +114,6 @@ public class Model {
 	public List<Boat> secondasol() {
 		return best2;
 	}
-	
-//	public boolean lunghezza_disponibile(int l ,List<Boat> listaBarche) {
-//		ArrayList<Boat> lb=new ArrayList<>(listaBarche);
-//		Collections.sort(lb);
-//		for(Boat b:listaBarche){
-//			if(b.lunghezza<=l && !parziale.contains(b)){	
-//				return false;
-//			}
-//		}
-//		return true;
-//	}
-
-	
 	
 	
 	

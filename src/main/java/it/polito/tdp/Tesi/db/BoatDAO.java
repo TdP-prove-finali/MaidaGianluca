@@ -49,7 +49,7 @@ public class BoatDAO {
 			sql= sql+"AND b.Condizione=?";
 		}
 		if(!tipologia.equals("Qualsiasi")) {
-			sql= sql+" AND b.Tipologia=?";
+			sql= sql+" AND b.Tipologia LIKE '%"+tipologia+"%'";
 		}
 		List<Boat> result = new ArrayList<Boat>();
 		Connection conn = DBConnect.getConnection();
@@ -67,9 +67,10 @@ public class BoatDAO {
 				st.setString(j,condi.get(i));
 				j++;
 			}
-			if(!tipologia.equals("Qualsiasi")) {
-				st.setString(j,tipologia);
-			}
+			
+//			if(!tipologia.equals("Qualsiasi")) {
+//				st.setString(j,tipologia);
+//			}
 
 			
 			ResultSet res = st.executeQuery();
@@ -90,7 +91,8 @@ public class BoatDAO {
 
 	public List<String> listAllTipologia() {
 		String sql = "SELECT DISTINCT Tipologia "
-				+ "FROM boat";
+				+ "FROM boat "
+				+ "WHERE Tipologia NOT LIKE '%,%'";
 		List<String> result = new ArrayList<String>();
 		Connection conn = DBConnect.getConnection();
 

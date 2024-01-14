@@ -107,17 +107,40 @@ public class Boat implements Comparable<Boat> {
 
 	public void setGuadagno() {
 		int tot=0;
-		if(this.lunghezza<=10) {
-			this.guadagno=100;
+		//condizione
+		if(condizione.equals("Nuovo")) {
+			this.guadagno=(prezzo*5/100);
 		}else {
-			this.guadagno=500;
+			this.guadagno=(prezzo*10/100);
 		}
-//		if(this.){
-//			
-//		}else {
-//			
-//		}
-//		this.guadagno = tot + 10 +this.prezzo;   // sistemare
+		//lunghezza
+		if(this.lunghezza<10) { // natanti
+			this.guadagno+=200;
+		}else if(this.lunghezza<15){ // targate
+			this.guadagno+=350;
+		}else if(this.lunghezza<20){
+			this.guadagno+=500;
+		}else if(this.lunghezza<24){
+			this.guadagno+=600;
+		}else{ // navi
+			this.guadagno+=800;
+			this.guadagno+=(prezzo*1/1000);
+		}
+		//anno
+		if(this.anno>2020) { 
+			this.guadagno+=200;
+		}else if(this.anno>2010){ 
+			this.guadagno+=150;
+		}else if(this.anno>2000){
+			this.guadagno+=100;
+		}else if(this.anno>1990){
+			this.guadagno+=50;
+		}else{
+			this.guadagno+=100;
+		}
+		
+		
+
 	}
 
 
@@ -125,9 +148,8 @@ public class Boat implements Comparable<Boat> {
 
 	@Override
 	public String toString() {
-		return "Boat [id=" + id + ", prezzo=" + prezzo + ", tipologia=" + tipologia + ", manifattura=" + manifattura
-				+ ", condizione=" + condizione + ", anno=" + anno + ", lunghezza=" + lunghezza + ", larghezza="
-				+ larghezza + ", Luogo=" + Luogo + "]";
+		return "Boat: id=" + id + ", prezzo=" + prezzo + ", tipologia=" + tipologia +  ", condizione=" + condizione 
+				+ ", anno=" + anno + ", lunghezza=" + lunghezza + "\nGuadagno atteso:" + guadagno;
 	}
 
 	@Override

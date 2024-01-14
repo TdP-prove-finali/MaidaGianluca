@@ -32,7 +32,6 @@ public class FXMLController {
 	List<Boat> lBoatSel = new ArrayList<Boat>();
 	List<Boat> best= new ArrayList<Boat>();
 	List<Boat> Allbest= new ArrayList<Boat>();
-//	List<Boat> bid= new ArrayList<Boat>();
 
 
 	@FXML
@@ -83,7 +82,7 @@ public class FXMLController {
 	@FXML
 	void ActionBtnId(ActionEvent event) {
 		try {
-			 id = Integer.parseInt(Id.getText());
+			id = Integer.parseInt(Id.getText());
 			for(Boat b: this.lBoatSel) {
 				if(b.getId()==id) {
 					TxtResult.appendText("\nBarca inserita correttamente nella lista delle soluzioni\n");
@@ -157,7 +156,7 @@ public class FXMLController {
 					best.add(bid);
 				}
 				best.addAll(this.model.barche(this.lBoatSel, budg));
-				id=0;
+				//id=0;
 				bid=null;			
 				if (best.size() != 0) {
 					TxtResult.appendText("SOLUZIONE\n\nLa soluzione ottimale è:\n ");
@@ -170,11 +169,11 @@ public class FXMLController {
 					Soluzione.setDisable(true);
 				}				
 				if (!this.model.secondasol().isEmpty()) {
-					TxtResult.appendText("\nIn alternativa la soluzione ottimale è:\n ");
+					TxtResult.appendText("\n\nIn alternativa la soluzione ottimale potrebbe essere:\n ");
 					for (Boat b : model.secondasol()) {
 						TxtResult.appendText(b.toString() + "\n");
 					}
-					int diff = this.model.calcola_prezzo(model.secondasol()) - this.model.calcola_prezzo(best);
+					int diff = model.calcola_prezzo(model.secondasol()) - budg;
 					TxtResult.appendText("\n\nSpendendo" + diff + " in più.");
 					TxtResult.appendText("\n\nGuadagno atteso: " + this.model.calcola_guadagno(model.secondasol()));
 				}
@@ -275,26 +274,21 @@ public class FXMLController {
 		Soluzione.setDisable(false);
 	}
 
-	private void setComboItemsCondizione() {
+	private void setComboItems() {
 		List<String> l = new ArrayList<String>();
 		l.add("Qualsiasi");
 		l.add("New boat");
 		l.add("Used boat");
 		Condizione.getItems().setAll(l);
-	}
-
-	private void setComboItemsTipologia() {
-		List<String> l = new ArrayList<String>();
-		l.add("Qualsiasi");
-		l.addAll(dao.listAllTipologia());
-		Tipologia.getItems().setAll(l);
+		List<String> l2 = new ArrayList<String>();
+		l2.add("Qualsiasi");
+		l2.addAll(dao.listAllTipologia());
+		Tipologia.getItems().setAll(l2);
 	}
 
 	public void setModel(Model model) {
 		this.model = model;
-		setComboItemsCondizione();
-		setComboItemsTipologia();
-
+		setComboItems();
 	}
 
 }
