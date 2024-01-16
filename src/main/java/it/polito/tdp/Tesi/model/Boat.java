@@ -148,7 +148,7 @@ public class Boat implements Comparable<Boat> {
 
 	@Override
 	public String toString() {
-		return "Boat: id=" + id + ", prezzo=" + prezzo + ", tipologia=" + tipologia +  ", condizione=" + condizione 
+		return "\nBoat: id=" + id + ", prezzo=" + prezzo + ", tipologia=" + tipologia +  ", condizione=" + condizione 
 				+ ", anno=" + anno + ", lunghezza=" + lunghezza + "\nGuadagno atteso:" + guadagno;
 	}
 

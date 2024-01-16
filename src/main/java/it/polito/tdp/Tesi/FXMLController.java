@@ -20,18 +20,13 @@ public class FXMLController {
 
 	public Model model;
 	public BoatDAO dao = new BoatDAO();
-	List<String> condi;
-	double Lmin;
-	double Lmax;
-	String tipo;
-	int Amin;
-	int Amax;
-	int budg;
-	int id=0;
-	Boat bid;
 	List<Boat> lBoatSel = new ArrayList<Boat>();
-	List<Boat> best= new ArrayList<Boat>();
 	List<Boat> Allbest= new ArrayList<Boat>();
+	List<Boat> best= new ArrayList<Boat>();
+	List<Boat> best2= new ArrayList<Boat>();
+	int budg;
+	int insertId=0;
+	Boat insertBoat;
 
 
 	@FXML
@@ -81,58 +76,83 @@ public class FXMLController {
 
 	@FXML
 	void ActionBtnId(ActionEvent event) {
-		try {
-			id = Integer.parseInt(Id.getText());
-			for(Boat b: this.lBoatSel) {
-				if(b.getId()==id) {
-					TxtResult.appendText("\nBarca inserita correttamente nella lista delle soluzioni\n");
-					bid=b;
-					return;
+			try {
+				insertId = Integer.parseInt(Id.getText());
+				for(Boat b: this.lBoatSel) {
+					if(b.getId()==insertId) {
+						TxtResult.appendText("\nBarca inserita correttamente nella lista delle soluzioni\n");
+						insertBoat=b;
+						Id.clear();
+						BtnId.setDisable(true);
+						return;
+					}
 				}
+				TxtResult.appendText("Inserire un ID corretto \n");
+			} catch (NumberFormatException e) {
+				TxtResult.appendText("Inserire un ID corretto \n");
 			}
-			TxtResult.appendText("Inserire un ID corretto \n");
-		} catch (NumberFormatException e) {
-			TxtResult.appendText("Inserire un ID corretto \n");
-		}
 	}
 
 	@FXML
 	void ActionLista(ActionEvent event) {
 		initialize();
-		TxtResult.clear();
-		if(Lista.getText().equals("LISTA")){
-			if(setFiltri()) {
-				if (budg != 0) {
+		switch(Lista.getText()) {
+			case "LISTA":
+				if(setFiltri()) {
 					if (lBoatSel.size() != 0) {
 						TxtResult.appendText("LISTA\n\nLe barche che rispettano i criteri sono: \n\n");
 						for (Boat b : lBoatSel) {
 							TxtResult.appendText(b.toString() + "\n");
 						}
 					} else {
-						TxtResult.appendText("LISTA\n\nNon ci sono barche che rispettano i criteri.\n\nModificare i parametri inseriti o effettuare una nuova ricerca ");
+						TxtResult.appendText("LISTA\n\nNon ci sono barche che rispettano i criteri.\n\nModificare i parametri inseriti o effettuare una nuova ricerca premendo sul bottone reset filtri");
 						Soluzione.setDisable(true);
-
 					}
 				}
-			}
-		}else if(Lista.getText().equals("ANNULLARE")){
-			TxtResult.appendText("Acquisto annullato\nProcedere con una nuova soluzione");
-			best.clear();
-			Soluzione.setText("GENERA SOLUZIONE");
-			Lista.setText("LISTA");
-		}else {
-			ActionResetFiltri(event);
-			initialize();
-			Allbest= new ArrayList<Boat>();
-			Soluzione.setText("GENERA SOLUZIONE");
-			Lista.setText("LISTA");
-		}
-			
+				break;
+			case "ANNULLA":
+				TxtResult.appendText("Acquisto annullato\nProcedere con una nuova soluzione");
+				Soluzione.setText("GENERA SOLUZIONE");
+				Lista.setText("LISTA");
+				BtnId.setDisable(false);
+				break;
+			case "CONFERMA 2° SOL":
+				TxtResult.appendText("Acquisto confermato con successo!\n\nLista barche acquistate fin'ora:\n");
+				//stampare tutti gli acquisti E GUADAGNO ATTESO;
+				Allbest.addAll(best2);
+				for (Boat b : Allbest) {
+					TxtResult.appendText(b.toString()+"\n");
+				}
+				TxtResult.appendText("\n\nProcedere con una nuova ricerca con il budget rimanente, modificare i filtri/budget o ricominciare\n");
+				budg-=model.calcola_prezzo(best);
+				Budget.setText(Integer.toString(budg));
+				Soluzione.setText("NUOVA RICERCA");
+				Lista.setText("RESET");
+				ResetFiltri.setText("RESET FILTRI");
+				break;
+			default:
+				ActionResetFiltri(event);
+				initialize();
+				Allbest= new ArrayList<Boat>();
+				Soluzione.setText("GENERA SOLUZIONE");
+				Lista.setText("LISTA");
+				ResetFiltri.setText("RESET FILTRI");
+				BtnId.setDisable(false);
+		}		
 	}
 
 	@FXML  
 	void ActionResetFiltri(ActionEvent event) {
-		TxtResult.clear();
+		initialize();
+		if(ResetFiltri.getText().equals("ANNULLA")) {
+			TxtResult.appendText("Acquisto annullato\nProcedere con una nuova soluzione");
+			Soluzione.setText("GENERA SOLUZIONE");
+			Lista.setText("LISTA");
+			BtnId.setDisable(false);
+			ResetFiltri.setText("RESET FILTRI");
+			return;
+		}
+		initialize();
 		Condizione.setValue("");
 		AnnoMax.clear();
 		AnnoMin.clear();
@@ -141,67 +161,85 @@ public class FXMLController {
 		LunghezzaMax.clear();
 		LunghezzaMin.clear();
 		Tipologia.setValue("");
+		Soluzione.setText("GENERA SOLUZIONE");
+		Lista.setText("LISTA");
+		BtnId.setDisable(false);
 	}
 
 	@FXML
 	void ActionSoluzione(ActionEvent event) {
-		TxtResult.clear();
 		initialize();
-		if(Soluzione.getText().equals("GENERA SOLUZIONE")){
-			if(setFiltri()){
-				best=new ArrayList<Boat>();
-				if(id!=0) {
-					budg-=bid.getPrezzo();
-					lBoatSel.remove(bid);
-					best.add(bid);
-				}
-				best.addAll(this.model.barche(this.lBoatSel, budg));
-				//id=0;
-				bid=null;			
-				if (best.size() != 0) {
-					TxtResult.appendText("SOLUZIONE\n\nLa soluzione ottimale è:\n ");
-					for (Boat b : best) {
-						TxtResult.appendText(b.toString() + "\n");
+		switch(Soluzione.getText()) {
+			case "GENERA SOLUZIONE":
+				best= new ArrayList<Boat>();
+				best2= new ArrayList<Boat>();
+				if(setFiltri()){		
+					if(insertId!=0) {
+						budg-=insertBoat.getPrezzo();
+						lBoatSel.remove(insertBoat);
+						best.add(insertBoat);
+						best2.add(insertBoat);
 					}
-					TxtResult.appendText("\nBudget speso: "+model.calcola_prezzo(best)+"\nGuadagno atteso: "+model.calcola_guadagno(best));
-				} else {
-					TxtResult.appendText("SOLUZIONE\n\nNon ci sono barche che rispettano i criteri per una soluzione ottima.\n\nModificare i parametri inseriti o effettuare una nuova ricerca ");
-					Soluzione.setDisable(true);
-				}				
-				if (!this.model.secondasol().isEmpty()) {
-					TxtResult.appendText("\n\nIn alternativa la soluzione ottimale potrebbe essere:\n ");
-					for (Boat b : model.secondasol()) {
-						TxtResult.appendText(b.toString() + "\n");
+					best.addAll(this.model.barche(this.lBoatSel, budg));  // RICERCA SOLUZIONE
+					insertId=0;
+					insertBoat=null;			
+					if (best.size() != 0) {
+						TxtResult.appendText("SOLUZIONE\n\nLa soluzione ottimale è:\n ");
+						for (Boat b : best) {
+							TxtResult.appendText(b.toString() + "\n");
+						}
+						TxtResult.appendText("\nBudget speso: "+model.calcola_prezzo(best)+"\nGuadagno totale atteso: "+model.calcola_guadagno(best));
+					} else {
+						TxtResult.appendText("SOLUZIONE\n\nNon ci sono barche che rispettano i criteri per una soluzione ottima.\n\nModificare i parametri inseriti o effettuare una nuova ricerca ");
+						Soluzione.setDisable(true);
+					}	
+					Soluzione.setText("CONFERMA");
+					Lista.setText("ANNULLA");
+					if (!model.secondasol().isEmpty()) {   // NEL CASO IN CUI CI SIA UNA SECONDA SOLUZIONE 
+						best2.addAll(model.secondasol());
+						TxtResult.appendText("\n\nIn alternativa la soluzione ottimale potrebbe essere:\n ");
+						for (Boat b : best2) {
+							TxtResult.appendText(b.toString() + "\n");
+						}
+						int diff = model.calcola_prezzo(model.secondasol()) - budg;
+						TxtResult.appendText("\n\nSpendendo" + diff + " in più.");
+						TxtResult.appendText("\n\nGuadagno totale atteso: " + this.model.calcola_guadagno(model.secondasol()));
+						Lista.setText("CONFERMA 2° SOL");
+						ResetFiltri.setText("ANNULLA");
 					}
-					int diff = model.calcola_prezzo(model.secondasol()) - budg;
-					TxtResult.appendText("\n\nSpendendo" + diff + " in più.");
-					TxtResult.appendText("\n\nGuadagno atteso: " + this.model.calcola_guadagno(model.secondasol()));
 				}
-				Soluzione.setText("CONFERMARE");
-				Lista.setText("ANNULLARE");
-			}
-		}else if(Soluzione.getText().equals("CONFERMARE")){
-			TxtResult.appendText("Acquisto confermato con successo!\n\nLista barche acquistate fin'ora:\n");
-			//stampare tutti gli acquisti E GUADAGNO ATTETSO;
-			Allbest.addAll(best);
-			for (Boat b : Allbest) {
-				TxtResult.appendText(b.toString()+"\n");
-			}
-			TxtResult.appendText("\n\nProcedere con una nuova ricerca con il budget rimanente, modificare i filtri/budget o ricominciare\n");
-			budg-=model.calcola_prezzo(best);
-			Budget.setText(Integer.toString(budg));
-			Soluzione.setText("NUOVA RICERCA");
-			Lista.setText("RICOMINCIARE");
-		}else {
-			Soluzione.setText("GENERA SOLUZIONE");
-			Lista.setText("LISTA");
-			ActionLista(event);
+				break;			
+			case "CONFERMA":
+				TxtResult.appendText("Acquisto confermato con successo!\n\nLista barche acquistate fin'ora:\n");
+				//stampare tutti gli acquisti E GUADAGNO ATTESO;
+				Allbest.addAll(best);
+				for (Boat b : Allbest) {
+					TxtResult.appendText(b.toString()+"\n");
+				}
+				TxtResult.appendText("\n\nProcedere con una nuova ricerca con il budget rimanente, modificare i filtri/budget o ricominciare\n");
+				budg-=model.calcola_prezzo(best);
+				Budget.setText(Integer.toString(budg));
+				Soluzione.setText("NUOVA RICERCA");
+				Lista.setText("RESET");
+				ResetFiltri.setText("RESET FILTRI");
+				break;
+			default:
+				Soluzione.setText("GENERA SOLUZIONE");
+				Lista.setText("LISTA");
+				ResetFiltri.setText("RESET FILTRI");
+				BtnId.setDisable(false);
+				ActionLista(event);
 		}
 	}
 
 	private boolean setFiltri() {
 		try {
-			condi= new ArrayList<String>(); 
+			double Lmin;
+			double Lmax;
+			String tipo;
+			int Amin;
+			int Amax;
+			List<String> condi= new ArrayList<String>(); 
 			if(Condizione.getValue()==null  || Condizione.getValue()=="") {
 				TxtResult.appendText("ATTENZIONE!\nSelezionare una CONDIZIONE dalla ChoiceBox o in altenarnativa selezionare 'Qualsiasi'.\n");
 				return false;
@@ -272,6 +310,7 @@ public class FXMLController {
 		assert Tipologia != null : "fx:id=\"Tipologia\" was not injected: check your FXML file 'Scene.fxml'.";
 		assert TxtResult != null : "fx:id=\"TxtResult\" was not injected: check your FXML file 'Scene.fxml'.";
 		Soluzione.setDisable(false);
+		TxtResult.clear();
 	}
 
 	private void setComboItems() {
@@ -292,8 +331,4 @@ public class FXMLController {
 	}
 
 }
-
-
-
-
 
