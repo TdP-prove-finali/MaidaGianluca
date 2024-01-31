@@ -66,13 +66,7 @@ public class BoatDAO {
 			for(int i=0;i<condi.size();i++) {
 				st.setString(j,condi.get(i));
 				j++;
-			}
-			
-//			if(!tipologia.equals("Qualsiasi")) {
-//				st.setString(j,tipologia);
-//			}
-
-			
+			}		
 			ResultSet res = st.executeQuery();
 			while (res.next()) {
 
@@ -95,7 +89,6 @@ public class BoatDAO {
 				+ "WHERE Tipologia NOT LIKE '%,%'";
 		List<String> result = new ArrayList<String>();
 		Connection conn = DBConnect.getConnection();
-
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet res = st.executeQuery();
@@ -115,8 +108,7 @@ public class BoatDAO {
 	public double getLmin() {
 		String sql = "SELECT MIN(Lunghezza) AS Lmin "
 				+ "FROM boat";
-		Connection conn = DBConnect.getConnection();
-		
+		Connection conn = DBConnect.getConnection();		
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet res = st.executeQuery();
@@ -136,8 +128,7 @@ public class BoatDAO {
 	public double getLmax() {
 		String sql = "SELECT MAX(Lunghezza) AS Lmax "
 				+ "FROM boat";
-		Connection conn = DBConnect.getConnection();
-		
+		Connection conn = DBConnect.getConnection();	
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet res = st.executeQuery();
@@ -157,8 +148,7 @@ public class BoatDAO {
 	public int getAmin() {
 		String sql = "SELECT MIN(Anno) AS Amin "
 				+ "FROM boat";
-		Connection conn = DBConnect.getConnection();
-		
+		Connection conn = DBConnect.getConnection();		
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet res = st.executeQuery();
@@ -178,8 +168,7 @@ public class BoatDAO {
 	public int getAmax() {
 		String sql = "SELECT MAX(Anno) AS Amax "
 				+ "FROM boat";
-		Connection conn = DBConnect.getConnection();
-		
+		Connection conn = DBConnect.getConnection();		
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet res = st.executeQuery();

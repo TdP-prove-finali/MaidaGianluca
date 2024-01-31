@@ -106,7 +106,6 @@ public class Boat implements Comparable<Boat> {
 	}
 
 	public void setGuadagno() {
-		int tot=0;
 		//condizione
 		if(condizione.equals("Nuovo")) {
 			this.guadagno=(prezzo*5/100);
@@ -116,7 +115,7 @@ public class Boat implements Comparable<Boat> {
 		//lunghezza
 		if(this.lunghezza<10) { // natanti
 			this.guadagno+=200;
-		}else if(this.lunghezza<15){ // targate
+		}else if(this.lunghezza<15){ // barche targate
 			this.guadagno+=350;
 		}else if(this.lunghezza<20){
 			this.guadagno+=500;

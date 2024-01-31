@@ -118,13 +118,12 @@ public class FXMLController {
 				break;
 			case "CONFERMA 2° SOL":
 				TxtResult.appendText("Acquisto confermato con successo!\n\nLista barche acquistate fin'ora:\n");
-				//stampare tutti gli acquisti E GUADAGNO ATTESO;
 				Allbest.addAll(best2);
 				for (Boat b : Allbest) {
 					TxtResult.appendText(b.toString()+"\n");
 				}
 				TxtResult.appendText("\n\nProcedere con una nuova ricerca con il budget rimanente, modificare i filtri/budget o ricominciare\n");
-				budg-=model.calcola_prezzo(best);
+				budg-=model.calcola_prezzo(best2);
 				Budget.setText(Integer.toString(budg));
 				Soluzione.setText("NUOVA RICERCA");
 				Lista.setText("RESET");
@@ -197,13 +196,13 @@ public class FXMLController {
 					Lista.setText("ANNULLA");
 					if (!model.secondasol().isEmpty()) {   // NEL CASO IN CUI CI SIA UNA SECONDA SOLUZIONE 
 						best2.addAll(model.secondasol());
-						TxtResult.appendText("\n\nIn alternativa la soluzione ottimale potrebbe essere:\n ");
+						TxtResult.appendText("\n\nIn alternativa la soluzione ottima potrebbe essere:\n ");
 						for (Boat b : best2) {
 							TxtResult.appendText(b.toString() + "\n");
 						}
 						int diff = model.calcola_prezzo(model.secondasol()) - budg;
-						TxtResult.appendText("\n\nSpendendo" + diff + " in più.");
-						TxtResult.appendText("\n\nGuadagno totale atteso: " + this.model.calcola_guadagno(model.secondasol()));
+						TxtResult.appendText("\n\nSpendendo" + diff + " in più rispetto al budget.");
+						TxtResult.appendText("\n\nGuadagno totale atteso dalla 2° soluzione: " + this.model.calcola_guadagno(model.secondasol()));
 						Lista.setText("CONFERMA 2° SOL");
 						ResetFiltri.setText("ANNULLA");
 					}
@@ -211,7 +210,6 @@ public class FXMLController {
 				break;			
 			case "CONFERMA":
 				TxtResult.appendText("Acquisto confermato con successo!\n\nLista barche acquistate fin'ora:\n");
-				//stampare tutti gli acquisti E GUADAGNO ATTESO;
 				Allbest.addAll(best);
 				for (Boat b : Allbest) {
 					TxtResult.appendText(b.toString()+"\n");

@@ -2,9 +2,8 @@ package it.polito.tdp.Tesi.db;
 
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
-import com.zaxxer.hikari.HikariConfig;
+import java.sql.SQLException;
 import com.zaxxer.hikari.HikariDataSource;
 
 public class DBConnect {
