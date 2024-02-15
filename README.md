@@ -1,8 +1,8 @@
-#MaidaGianluca
+# MaidaGianluca
 
 Software per la gestione e la massimizzazione dei profitti nel settore della vendita di imbarcazioni da diporto.
 
-Istruzioni per l'installazione e l'utilizzo del software:
+# Istruzioni per l'installazione e l'utilizzo del software:
 
 1- Effettuare il fork del progetto al seguente link URI: https://github.com/TdP-prove-finali/MaidaGianluca.git
 
