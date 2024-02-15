@@ -114,15 +114,15 @@ public class Boat implements Comparable<Boat> {
 		}
 		//lunghezza
 		if(this.lunghezza<10) { // natanti
-			this.guadagno+=200;
-		}else if(this.lunghezza<15){ // barche targate
 			this.guadagno+=350;
-		}else if(this.lunghezza<20){
+		}else if(this.lunghezza<15){ // barche targate
 			this.guadagno+=500;
+		}else if(this.lunghezza<20){
+			this.guadagno+=750;
 		}else if(this.lunghezza<24){
-			this.guadagno+=600;
-		}else{ // navi
-			this.guadagno+=800;
+			this.guadagno+=1000;
+		}else{                      // navi
+			this.guadagno+=2000;
 			this.guadagno+=(prezzo*1/1000);
 		}
 		//anno
@@ -135,7 +135,7 @@ public class Boat implements Comparable<Boat> {
 		}else if(this.anno>1990){
 			this.guadagno+=50;
 		}else{
-			this.guadagno+=100;
+			this.guadagno+=100;  //epoca -> più di 30 anni
 		}
 		
 		

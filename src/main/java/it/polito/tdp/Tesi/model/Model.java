@@ -32,7 +32,7 @@ public class Model {
 	private void barche_ricorsiva(List<Boat> parziale, int budget, List<Boat> listaBarche ) {
 		if(parziale.size()>0 ) {  //caso terminale
 			int disponibile=budget-this.prezzoP;
-			int disponibile2=budget+(budget/10)-this.prezzoP;
+			int disponibile2=budget+(budget/100)-this.prezzoP;
 			if(this.calcola_guadagno(parziale)>this.calcola_guadagno(best)) { 
 				if(disponibile>=0) {
 					if((disponibilita(disponibile,listaBarche) || disponibile==0 )){
@@ -55,7 +55,7 @@ public class Model {
 				this.barche_ricorsiva(parziale, budget, listaBarche );
 				parziale.remove(b);
 				this.prezzoP-=b.prezzo;
-			}else if((budget+(budget/10))>=(this.prezzoP+b.prezzo) && !parziale.contains(b)) {
+			}else if((budget+(budget/100))>=(this.prezzoP+b.prezzo) && !parziale.contains(b)) {
 				parziale.add(b);
 				this.prezzoP+=b.prezzo;
 				this.barche_ricorsiva(parziale, budget, listaBarche);

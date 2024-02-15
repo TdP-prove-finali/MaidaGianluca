@@ -70,8 +70,9 @@ public class BoatDAO {
 			ResultSet res = st.executeQuery();
 			while (res.next()) {
 
-				Boat b = new Boat(res.getInt("Id"), res.getInt("Prezzo"),res.getString("Tipologia"),res.getString("Manifattura"),res.getString("Condizione"), 
-						res.getInt("Anno"), res.getDouble("Lunghezza"),	res.getDouble("Larghezza"), res.getString("Luogo"));
+				Boat b = new Boat(res.getInt("Id"), res.getInt("Prezzo"),res.getString("Tipologia"),res.getString("Manifattura"),
+						res.getString("Condizione"), res.getInt("Anno"), res.getDouble("Lunghezza"),	
+						res.getDouble("Larghezza"), res.getString("Luogo"));
 				result.add(b);
 			}
 			conn.close();

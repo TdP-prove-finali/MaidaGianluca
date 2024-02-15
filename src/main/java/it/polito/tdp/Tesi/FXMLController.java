@@ -105,7 +105,8 @@ public class FXMLController {
 							TxtResult.appendText(b.toString() + "\n");
 						}
 					} else {
-						TxtResult.appendText("LISTA\n\nNon ci sono barche che rispettano i criteri.\n\nModificare i parametri inseriti o effettuare una nuova ricerca premendo sul bottone reset filtri");
+						TxtResult.appendText("LISTA\n\nNon ci sono barche che rispettano i criteri.\n\nModificare i parametri inseriti"
+												+ " o effettuare una nuova ricerca premendo sul bottone reset filtri");
 						Soluzione.setDisable(true);
 					}
 				}
@@ -122,6 +123,7 @@ public class FXMLController {
 				for (Boat b : Allbest) {
 					TxtResult.appendText(b.toString()+"\n");
 				}
+				TxtResult.appendText("\nBudget speso: "+model.calcola_prezzo(this.Allbest)+"\nGuadagno totale atteso: "+model.calcola_guadagno(this.Allbest));
 				TxtResult.appendText("\n\nProcedere con una nuova ricerca con il budget rimanente, modificare i filtri/budget o ricominciare\n");
 				budg-=model.calcola_prezzo(best2);
 				Budget.setText(Integer.toString(budg));
@@ -189,7 +191,8 @@ public class FXMLController {
 						}
 						TxtResult.appendText("\nBudget speso: "+model.calcola_prezzo(best)+"\nGuadagno totale atteso: "+model.calcola_guadagno(best));
 					} else {
-						TxtResult.appendText("SOLUZIONE\n\nNon ci sono barche che rispettano i criteri per una soluzione ottima.\n\nModificare i parametri inseriti o effettuare una nuova ricerca ");
+						TxtResult.appendText("SOLUZIONE\n\nNon ci sono barche che rispettano i criteri per una soluzione ottima.\n"
+								+ "\nModificare i parametri inseriti o effettuare una nuova ricerca ");
 						Soluzione.setDisable(true);
 					}	
 					Soluzione.setText("CONFERMA");
@@ -214,6 +217,7 @@ public class FXMLController {
 				for (Boat b : Allbest) {
 					TxtResult.appendText(b.toString()+"\n");
 				}
+				TxtResult.appendText("\nBudget speso: "+model.calcola_prezzo(Allbest)+"\nGuadagno totale atteso: "+model.calcola_guadagno(Allbest));
 				TxtResult.appendText("\n\nProcedere con una nuova ricerca con il budget rimanente, modificare i filtri/budget o ricominciare\n");
 				budg-=model.calcola_prezzo(best);
 				Budget.setText(Integer.toString(budg));

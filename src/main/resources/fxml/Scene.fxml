@@ -16,7 +16,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.Tesi.FXMLController">
    <top>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="47.0" prefWidth="692.0" text="SALONE NAUTICO" textFill="#3060ae" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="47.0" prefWidth="692.0" text="BOAT SITE" textFill="#3060ae" BorderPane.alignment="CENTER">
          <font>
             <Font size="24.0" />
          </font></Label>
